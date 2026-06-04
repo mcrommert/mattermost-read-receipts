@@ -1,0 +1,47 @@
+# ---------------------------------------------------------------------------
+# Mattermost Read Receipts — example configuration
+# Copy to config.yml and edit. Secrets can also come from environment variables
+# (MM_URL, MM_TOKEN), which is recommended so you don't commit your token.
+# ---------------------------------------------------------------------------
+
+# Your Mattermost server URL.
+mattermost_url: "https://mattermost.example.com"
+
+# A personal access token for an account that is a SYSTEM ADMIN (or at least can
+# read channel members and add/remove reactions). Reactions are posted AS this
+# account, since Mattermost does not allow reacting on behalf of another user.
+# Prefer setting this via the MM_TOKEN env var instead of here.
+admin_token: ""
+
+# The team (by its URL name / slug, e.g. the part in /your-team/channels/...).
+team: "my-team"
+
+# Channels to watch, by name (the URL slug, not the display name).
+# Keep this to DMs / small channels — per-message read state does not scale to
+# large busy channels.
+channels:
+  - "general"
+  - "random"
+
+# Who gets a read marker.
+#   - a list of usernames  -> track exactly those people
+#   - the string "auto"    -> track all human members of the watched channels
+users:
+  - "alice"
+  - "bob"
+# users: auto
+
+# How often to poll for read state, in seconds.
+poll_interval: 10
+
+# Stop tracking messages older than this (hours). Bounds memory and API calls.
+max_age_hours: 24
+
+emoji:
+  # Custom emoji are created automatically (a colored disc with the user's
+  # initial). Set to false if you want to create/assign them yourself.
+  auto_create: true
+  # Emoji are named "<prefix><username>", e.g. seen_alice.
+  prefix: "seen_"
+  # Number of leading characters of the username to draw on the disc.
+  initials: 1
